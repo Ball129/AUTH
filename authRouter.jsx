@@ -1,6 +1,6 @@
 import Path from "../../constance/paths"
 import React from "react";
-import BaseRouter from "../../components/baseRouter";
+import BaseRouter from "../../components/BaseRouter";
 import {Label} from 'semantic-ui-react'
 
 
@@ -12,13 +12,13 @@ class AuthRouter extends BaseRouter {
     routes = [
         {
             'key': 'login_form',
-            'path': '/login',
+            'path': Path.LOGIN,
             'exact': false,
             'render': this.renderLoginForm
         },
         {
             'key': 'register_form',
-            'path': '/register',
+            'path': Path.REGISTER,
             'exact': false,
             'render': this.renderRegisterForm
         },

@@ -59,40 +59,40 @@ class FirebaseLoginFormComponent extends React.Component {
                             <Segment stacked>
                                 <Dimmer.Dimmable>
                                     <Dimmer active={this.state.loading} inverted/>
-                                <Form size='large'>
-                                    <Form.Field>
-                                        <Form.Input
-                                            fluid
-                                            icon='user'
-                                            iconPosition='left'
-                                            placeholder='E-mail address'
-                                            name='email'
-                                            onChange={this.onChange}
-                                        />
-                                    </Form.Field>
+                                    <Form size='large'>
+                                        <Form.Field>
+                                            <Form.Input
+                                                fluid
+                                                icon='user'
+                                                iconPosition='left'
+                                                placeholder='E-mail address'
+                                                name='email'
+                                                onChange={this.onChange}
+                                            />
+                                        </Form.Field>
 
-                                    <Form.Field>
-                                        <Form.Input
-                                            fluid
-                                            icon='lock'
-                                            iconPosition='left'
-                                            placeholder='Password'
-                                            type='password'
-                                            name='password'
-                                            onChange={this.onChange}
-                                        />
-                                    </Form.Field>
+                                        <Form.Field>
+                                            <Form.Input
+                                                fluid
+                                                icon='lock'
+                                                iconPosition='left'
+                                                placeholder='Password'
+                                                type='password'
+                                                name='password'
+                                                onChange={this.onChange}
+                                            />
+                                        </Form.Field>
 
-                                    <Form.Group inline>
-                                        <Button color='teal' fluid size='large' onClick={this.onSubmit}>
-                                            Login
-                                        </Button>
-                                        <Button color='teal' fluid size='large'>
-                                            Register
-                                        </Button>
-                                    </Form.Group>
-                                </Form>
-                                    </Dimmer.Dimmable>
+                                        <Form.Group inline>
+                                            <Button color='teal' fluid size='large' onClick={this.onSubmit}>
+                                                Login
+                                            </Button>
+                                            <Button color='teal' fluid size='large'>
+                                                Register
+                                            </Button>
+                                        </Form.Group>
+                                    </Form>
+                                </Dimmer.Dimmable>
                             </Segment>
 
                         </Grid.Column>

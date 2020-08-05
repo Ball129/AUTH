@@ -1,11 +1,11 @@
 import React from "react";
 import BaseRouter from "../../components/baseRouter";
 import {Label} from 'semantic-ui-react'
+import {FirebaseLoginForm} from "./firebaseLoginForm";
 
 
 class AuthRouter extends BaseRouter {
 
-    renderLoginForm = () => { return <Label>Login</Label>};
     renderRegisterForm = () => { return <Label>Register</Label>};
 
     routes = [
@@ -13,7 +13,7 @@ class AuthRouter extends BaseRouter {
             'key': 'login_form',
             'path': '/login',
             'exact': false,
-            'render': this.renderLoginForm
+            'component': FirebaseLoginForm
         },
         {
             'key': 'register_form',

@@ -3,12 +3,13 @@ import {Button, Container, Dimmer, Form, Grid, Header, Segment} from "semantic-u
 import firebase from "firebase";
 import {withFirestore} from "react-firestore";
 import {AppContext} from "../../constance/appContext";
+import {useLocation} from "react-router";
 
 class FirebaseLoginFormComponent extends React.Component {
 
     constructor(props) {
         super(props)
-
+         console.log(this.props.match)
         this.state = {
             email: '',
             password: '',
@@ -106,5 +107,7 @@ class FirebaseLoginFormComponent extends React.Component {
 
 export const FirebaseLoginForm = (props) => {
     let appContext = useContext(AppContext);
+    let location = useLocation();
+    console.log(location.pathname);
     return <FirebaseLoginFormComponent {...props} {...appContext}/>
 };

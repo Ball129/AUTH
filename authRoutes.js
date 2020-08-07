@@ -1,17 +1,13 @@
 import React from "react";
-import BaseRouter from "../../components/baseRouter";
 import {Label} from 'semantic-ui-react'
 import {FirebaseLoginForm} from "./firebaseLoginForm";
 
+export const renderRegisterForm = () => { return <Label>Register</Label>};
 
-class AuthRouter extends BaseRouter {
-
-    renderRegisterForm = () => { return <Label>Register</Label>};
-
-    routes = [
+const AUTH_ROUTES = [
         {
             'key': 'login_form',
-            'path': '/login',
+            'path': '/login/:name?',
             'exact': false,
             'component': FirebaseLoginForm
         },
@@ -19,9 +15,7 @@ class AuthRouter extends BaseRouter {
             'key': 'register_form',
             'path': '/register',
             'exact': false,
-            'render': this.renderRegisterForm
+            'render': renderRegisterForm
         },
     ];
-}
-
-export default AuthRouter;
+export default AUTH_ROUTES;

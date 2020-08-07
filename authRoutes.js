@@ -1,6 +1,6 @@
 import React from "react";
 import {Label} from 'semantic-ui-react'
-import {FirebaseLoginForm} from "./firebaseLoginForm";
+import {FirebaseLoginForm} from "./FirebaseLoginForm";
 
 export const renderRegisterForm = () => { return <Label>Register</Label>};
 

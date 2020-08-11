@@ -1,6 +1,7 @@
 class AuthService {
-    willRedirect = (destination) => {
-        if (window.location.pathname !== destination) {
+    willRedirect = (currentLocation, destination) => {
+        console.log("WillRedirect", currentLocation, destination)
+        if (currentLocation !== destination) {
             return {redirect: true, destination: destination}
         }
         return {redirect: false, destination: null}

@@ -1,21 +1,21 @@
 import React, {useContext} from "react";
 import {Button, Container, Dimmer, Form, Grid, Header, Segment} from "semantic-ui-react";
-import firebase from "firebase";
-import {withFirestore} from "react-firestore";
 import {AppContext} from "../../constance/appContext";
-import {useLocation} from "react-router";
+import AuthService from "./authService";
+
 
 class FirebaseLoginFormComponent extends React.Component {
 
     constructor(props) {
         super(props)
-         console.log(this.props.match)
+        // console.log(this.props.match)
+        this.auth_service = new AuthService()
         this.state = {
             email: '',
             password: '',
             currentUser: null,
             message: '',
-            loading: false
+            loading: false,
         }
     }
 
@@ -34,11 +34,7 @@ class FirebaseLoginFormComponent extends React.Component {
         this.props.db.auth()
             .signInWithEmailAndPassword(email, password)
             .then(response => {
-                console.log(response.user)
-                this.setState({
-                    currentUser: response.user,
-                    loading: false
-                }, this.props.setCurrentUser(this.state.currentUser))
+                this.props.setCurrentUser(response.user)
             })
             .catch(error => {
                 alert(error);
@@ -107,7 +103,5 @@ class FirebaseLoginFormComponent extends React.Component {
 
 export const FirebaseLoginForm = (props) => {
     let appContext = useContext(AppContext);
-    let location = useLocation();
-    console.log(location.pathname);
     return <FirebaseLoginFormComponent {...props} {...appContext}/>
 };

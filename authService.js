@@ -11,7 +11,7 @@ class AuthService {
         return this.willRedirect(currentLocation, destination)
     }
 
-    static async getUser(firebase, onSuccess, onFail) {
+    static async watchUser(firebase, onSuccess, onFail) {
         firebase.auth().onAuthStateChanged(user => {
             if (user) {
                 console.log("User:", user.email)

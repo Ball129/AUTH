@@ -63,7 +63,7 @@ class FirebaseLoginFormComponent extends React.Component {
                                                 fluid
                                                 icon='user'
                                                 iconPosition='left'
-                                                placeholder='E-mail address'
+                                                placeholder='Username / E-mail'
                                                 name='email'
                                                 onChange={this.onChange}
                                             />

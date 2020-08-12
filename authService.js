@@ -1,20 +1,20 @@
 class AuthService {
-    willRedirect = (currentLocation, destination) => {
-        console.log("WillRedirect", currentLocation, destination)
+    static willRedirect = (currentLocation, destination) => {
+        console.log(`WillRedirect: from ${currentLocation} >> ${destination} :: ${currentLocation !== destination}`)
         if (currentLocation !== destination) {
             return {redirect: true, destination: destination}
         }
         return {redirect: false, destination: null}
     }
 
-    doRedirect = (destination) => {
-        return this.willRedirect(destination)
+    static doRedirect = (currentLocation, destination) => {
+        return this.willRedirect(currentLocation, destination)
     }
 
     static async getUser(firebase, onSuccess, onFail) {
-        await firebase.auth().onAuthStateChanged(user => {
+        firebase.auth().onAuthStateChanged(user => {
             if (user) {
-                console.log("User : ", user)
+                console.log("User:", user.email)
                 onSuccess(user)
             } else {
                 console.log("No user")
@@ -23,7 +23,7 @@ class AuthService {
         })
     }
 
-    logout = (e, firebase, onSuccess, onFail) => {
+    static logout = (e, firebase, onSuccess, onFail) => {
         e.preventDefault()
         firebase.auth().signOut().then(response => {
             onSuccess(response)

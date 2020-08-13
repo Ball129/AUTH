@@ -29,18 +29,22 @@ class FirebaseRegisterFormComponent extends React.Component {
         })
     }
 
-    doRegister = () => {
+    doRegister = async () => {
         const {email, password} = this.state
+        let firestore = this.props.db.firestore()
+        let collection = firestore.collection("users");
+        let doc_id = null
+        await FirestoreService.addDocument(collection, {username: email, roles: []})
+            .then(user_id => {doc_id = user_id;})
+        if (!doc_id) {
+            return
+        }
         this.props.db.auth()
             .createUserWithEmailAndPassword(email, password)
-            .then(async response => {
-                let firestore = this.props.db.firestore()
-                let collection = firestore.collection("users");
-                await FirestoreService.addDocument(collection, {username: email})
-                this.props.setCurrentUser(response.user)
-            })
-            .catch(error => {
+
+            .catch(async error => {
                 alert(error);
+                await FirestoreService.deleteDocument(collection, doc_id)
                 this.setState({
                     message: error.message,
                     loading: false
@@ -55,6 +59,7 @@ class FirebaseRegisterFormComponent extends React.Component {
         let query = collection.where("username", "==", email)
         await FirestoreService.checkIfExisted([query])
             .then((existed) => {
+                console.log({existed})
                 if (existed) {
                     alert("Username Existed")
                     this.setState({loading: false})
@@ -113,7 +118,7 @@ class FirebaseRegisterFormComponent extends React.Component {
                                         </Form.Field>
 
                                         <Form.Group inline>
-                                            <Button color='teal' size='large'>
+                                            <Button color='teal' size='large' onClick={this.onSubmit}>
                                                 SignUp
                                             </Button>
                                         </Form.Group>

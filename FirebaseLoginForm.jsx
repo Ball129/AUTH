@@ -35,9 +35,9 @@ class FirebaseLoginFormComponent extends React.Component {
         const {email, password} = this.state
         this.props.db.auth()
             .signInWithEmailAndPassword(email, password)
-            .then(response => {
-                this.props.setCurrentUser(response.user)
-            })
+            // .then(response => {
+            //     this.props.setCurrentUser(response.user)
+            // })
             .catch(error => {
                 alert(error);
                 this.setState({
@@ -45,6 +45,10 @@ class FirebaseLoginFormComponent extends React.Component {
                     loading: false
                 })
             })
+    }
+
+    gotoRegister = () => {
+        this.props.requestRedirect(Path.REGISTER)
     }
 
     render() {
@@ -86,8 +90,7 @@ class FirebaseLoginFormComponent extends React.Component {
                                             <Button color='teal' fluid size='large' onClick={this.onSubmit}>
                                                 Login
                                             </Button>
-                                            <Button color='teal' fluid size='large'
-                                                    onClick={this.props.requestRedirect(Path.REGISTER)}>
+                                            <Button color='teal' fluid size='large' onClick={this.gotoRegister}>
                                                 Register
                                             </Button>
                                         </Form.Group>

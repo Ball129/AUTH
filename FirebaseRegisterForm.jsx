@@ -3,7 +3,6 @@ import {Button, Container, Dimmer, Form, Grid, Header, Segment} from "semantic-u
 import {AppContext} from "../../constance/appContext";
 import AuthService from "./authService";
 import FirestoreService from "../FIREBASE/firestoreService";
-import _ from "lodash";
 
 
 class FirebaseRegisterFormComponent extends React.Component {

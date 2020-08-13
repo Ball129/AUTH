@@ -2,6 +2,7 @@ import React, {useContext} from "react";
 import {Button, Container, Dimmer, Form, Grid, Header, Segment} from "semantic-ui-react";
 import {AppContext} from "../../constance/appContext";
 import AuthService from "./authService";
+ import Path from "../../constance/paths"
 
 
 class FirebaseLoginFormComponent extends React.Component {
@@ -85,7 +86,8 @@ class FirebaseLoginFormComponent extends React.Component {
                                             <Button color='teal' fluid size='large' onClick={this.onSubmit}>
                                                 Login
                                             </Button>
-                                            <Button color='teal' fluid size='large'>
+                                            <Button color='teal' fluid size='large'
+                                                    onClick={this.props.requestRedirect(Path.REGISTER)}>
                                                 Register
                                             </Button>
                                         </Form.Group>

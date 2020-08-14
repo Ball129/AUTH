@@ -3,8 +3,10 @@ import {Button, Container, Dimmer, Form, Grid, Header, Segment} from "semantic-u
 import {AppContext} from "../../constance/appContext";
 import AuthService from "./authService";
 import FirestoreService from "../FIREBASE/firestoreService";
-import {Route} from "react-router";
+import {Route, Switch} from "react-router";
  import Path from "../../constance/paths"
+import {Handle404View} from "../../CORE/Handle404View";
+import PrivateRoute from "../../components/PrivateRoute";
 
 
 class FirebaseRegisterFormComponent extends React.Component {
@@ -96,53 +98,63 @@ class FirebaseRegisterFormComponent extends React.Component {
 
                                 <Dimmer.Dimmable>
                                     <Dimmer active={this.state.loading} inverted/>
-                                    <Route exact path={this.props.match.path} render={() => {
-                                        return (
-                                            <Form size='large'>
-                                                <Form.Field>
-                                                    <Form.Input
-                                                        fluid
-                                                        icon='user'
-                                                        iconPosition='left'
-                                                        placeholder='Username / E-mail'
-                                                        name='email'
-                                                        onChange={this.onChange}
-                                                    />
-                                                </Form.Field>
+                                    <Switch>
+                                        <Route exact path={this.props.match.path} render={() => {
+                                            return (
+                                                <Form size='large'>
+                                                    <Form.Field>
+                                                        <Form.Input
+                                                            fluid
+                                                            icon='user'
+                                                            iconPosition='left'
+                                                            placeholder='Username / E-mail'
+                                                            name='email'
+                                                            onChange={this.onChange}
+                                                        />
+                                                    </Form.Field>
 
-                                                <Form.Field>
-                                                    <Form.Input
-                                                        fluid
-                                                        icon='lock'
-                                                        iconPosition='left'
-                                                        placeholder='Password'
-                                                        type='password'
-                                                        name='password'
-                                                        onChange={this.onChange}
-                                                    />
-                                                </Form.Field>
+                                                    <Form.Field>
+                                                        <Form.Input
+                                                            fluid
+                                                            icon='lock'
+                                                            iconPosition='left'
+                                                            placeholder='Password'
+                                                            type='password'
+                                                            name='password'
+                                                            onChange={this.onChange}
+                                                        />
+                                                    </Form.Field>
 
-                                                <Form.Group inline>
-                                                    <Button color='teal' size='large' onClick={this.onSubmit}>
-                                                        SignUp
-                                                    </Button>
-                                                </Form.Group>
-                                            </Form>
-                                        )
-                                    }}/>
-                                    <Route path={`${this.props.match.path}${Path.ACTIVATE}`} render={() => {
-                                        return (
-                                            <Form size='large'>
-                                                <Form.Field>
-                                                    <Form.Button
-                                                        color={"green"} fluid
-                                                    >
-                                                        Activate
-                                                    </Form.Button>
-                                                </Form.Field>
-                                            </Form>
-                                        )
-                                    }}/>
+                                                    <Form.Group inline>
+                                                        <Button color='teal' size='large' onClick={this.onSubmit}>
+                                                            SignUp
+                                                        </Button>
+                                                    </Form.Group>
+                                                </Form>
+                                            )
+                                        }}/>
+                                        {/*TODO: Use PrivateRoute*/}
+                                        <Route path={`${this.props.match.path}${Path.ACTIVATE}`} render={() => {
+                                            return (
+                                                <Form size='large'>
+                                                    <Form.Field>
+                                                        <Form.Button
+                                                            color={"green"} fluid
+                                                        >
+                                                            Activate
+                                                        </Form.Button>
+                                                    </Form.Field>
+                                                </Form>
+                                            )
+                                        }}/>
+                                        <Route render={() => {
+                                            return (
+                                                <Handle404View
+                                                    defaultPath={Path.REGISTER}
+                                                />
+                                            )
+                                        }}/>
+                                    </Switch>
                                 </Dimmer.Dimmable>
                             </Segment>
 

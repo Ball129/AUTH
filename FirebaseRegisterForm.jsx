@@ -3,6 +3,8 @@ import {Button, Container, Dimmer, Form, Grid, Header, Segment} from "semantic-u
 import {AppContext} from "../../constance/appContext";
 import AuthService from "./authService";
 import FirestoreService from "../FIREBASE/firestoreService";
+import {Route} from "react-router";
+ import Path from "../../constance/paths"
 
 
 class FirebaseRegisterFormComponent extends React.Component {
@@ -31,20 +33,20 @@ class FirebaseRegisterFormComponent extends React.Component {
 
     doRegister = async () => {
         const {email, password} = this.state
-        let firestore = this.props.db.firestore()
-        let collection = firestore.collection("users");
-        let doc_id = null
-        await FirestoreService.addDocument(collection, {username: email, roles: []})
-            .then(user_id => {doc_id = user_id;})
-        if (!doc_id) {
-            return
-        }
+        // let firestore = this.props.db.firestore()
+        // let collection = firestore.collection("users");
+        // let doc_id = null
+        // await FirestoreService.addDocument(collection, {username: email, roles: []})
+        //     .then(user_id => {doc_id = user_id;})
+        // if (!doc_id) {
+        //     return
+        // }
         this.props.db.auth()
             .createUserWithEmailAndPassword(email, password)
 
             .catch(async error => {
                 alert(error);
-                await FirestoreService.deleteDocument(collection, doc_id)
+                // await FirestoreService.deleteDocument(collection, doc_id)
                 this.setState({
                     message: error.message,
                     loading: false
@@ -91,38 +93,56 @@ class FirebaseRegisterFormComponent extends React.Component {
                             <Header as='h2' color='teal' textAlign='center'>Log-in to your account
                             </Header>
                             <Segment stacked>
+
                                 <Dimmer.Dimmable>
                                     <Dimmer active={this.state.loading} inverted/>
-                                    <Form size='large'>
-                                        <Form.Field>
-                                            <Form.Input
-                                                fluid
-                                                icon='user'
-                                                iconPosition='left'
-                                                placeholder='Username / E-mail'
-                                                name='email'
-                                                onChange={this.onChange}
-                                            />
-                                        </Form.Field>
+                                    <Route exact path={this.props.match.path} render={() => {
+                                        return (
+                                            <Form size='large'>
+                                                <Form.Field>
+                                                    <Form.Input
+                                                        fluid
+                                                        icon='user'
+                                                        iconPosition='left'
+                                                        placeholder='Username / E-mail'
+                                                        name='email'
+                                                        onChange={this.onChange}
+                                                    />
+                                                </Form.Field>
 
-                                        <Form.Field>
-                                            <Form.Input
-                                                fluid
-                                                icon='lock'
-                                                iconPosition='left'
-                                                placeholder='Password'
-                                                type='password'
-                                                name='password'
-                                                onChange={this.onChange}
-                                            />
-                                        </Form.Field>
+                                                <Form.Field>
+                                                    <Form.Input
+                                                        fluid
+                                                        icon='lock'
+                                                        iconPosition='left'
+                                                        placeholder='Password'
+                                                        type='password'
+                                                        name='password'
+                                                        onChange={this.onChange}
+                                                    />
+                                                </Form.Field>
 
-                                        <Form.Group inline>
-                                            <Button color='teal' size='large' onClick={this.onSubmit}>
-                                                SignUp
-                                            </Button>
-                                        </Form.Group>
-                                    </Form>
+                                                <Form.Group inline>
+                                                    <Button color='teal' size='large' onClick={this.onSubmit}>
+                                                        SignUp
+                                                    </Button>
+                                                </Form.Group>
+                                            </Form>
+                                        )
+                                    }}/>
+                                    <Route path={`${this.props.match.path}${Path.ACTIVATE}`} render={() => {
+                                        return (
+                                            <Form size='large'>
+                                                <Form.Field>
+                                                    <Form.Button
+                                                        color={"green"} fluid
+                                                    >
+                                                        Activate
+                                                    </Form.Button>
+                                                </Form.Field>
+                                            </Form>
+                                        )
+                                    }}/>
                                 </Dimmer.Dimmable>
                             </Segment>
 

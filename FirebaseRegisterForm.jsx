@@ -2,10 +2,10 @@ import React, {useContext} from "react";
 import {Button, Container, Dimmer, Form, Grid, Header, Segment} from "semantic-ui-react";
 import {AppContext} from "../../constance/appContext";
 import AuthService from "./authService";
- import Path from "../../constance/paths"
+import FirestoreService from "../FIREBASE/firestoreService";
 
 
-class FirebaseLoginFormComponent extends React.Component {
+class FirebaseRegisterFormComponent extends React.Component {
 
     constructor(props) {
         super(props)
@@ -29,15 +29,44 @@ class FirebaseLoginFormComponent extends React.Component {
         })
     }
 
-    onSubmit = e => {
-        this.setState({loading: true})
-        e.preventDefault()
+    doRegister = async () => {
         const {email, password} = this.state
+        let firestore = this.props.db.firestore()
+        let collection = firestore.collection("users");
+        let doc_id = null
+        await FirestoreService.addDocument(collection, {username: email, roles: []})
+            .then(user_id => {doc_id = user_id;})
+        if (!doc_id) {
+            return
+        }
         this.props.db.auth()
-            .signInWithEmailAndPassword(email, password)
-            // .then(response => {
-            //     this.props.setCurrentUser(response.user)
-            // })
+            .createUserWithEmailAndPassword(email, password)
+
+            .catch(async error => {
+                alert(error);
+                await FirestoreService.deleteDocument(collection, doc_id)
+                this.setState({
+                    message: error.message,
+                    loading: false
+                })
+            })
+    }
+
+    checkUsernameExisted = async () => {
+        const {email} = this.state
+        let firestore = this.props.db.firestore()
+        let collection = firestore.collection("users");
+        let query = collection.where("username", "==", email)
+        await FirestoreService.checkIfExisted([query])
+            .then((existed) => {
+                console.log({existed})
+                if (existed) {
+                    alert("Username Existed")
+                    this.setState({loading: false})
+                } else {
+                    this.doRegister()
+                }
+            })
             .catch(error => {
                 alert(error);
                 this.setState({
@@ -47,8 +76,10 @@ class FirebaseLoginFormComponent extends React.Component {
             })
     }
 
-    gotoRegister = () => {
-        this.props.requestRedirect(Path.REGISTER)
+    onSubmit = e => {
+        this.setState({loading: true})
+        e.preventDefault()
+        this.checkUsernameExisted().then(() => {})
     }
 
     render() {
@@ -87,11 +118,8 @@ class FirebaseLoginFormComponent extends React.Component {
                                         </Form.Field>
 
                                         <Form.Group inline>
-                                            <Button color='teal' fluid size='large' onClick={this.onSubmit}>
-                                                Login
-                                            </Button>
-                                            <Button color='teal' fluid size='large' onClick={this.gotoRegister}>
-                                                Register
+                                            <Button color='teal' size='large' onClick={this.onSubmit}>
+                                                SignUp
                                             </Button>
                                         </Form.Group>
                                     </Form>
@@ -107,7 +135,7 @@ class FirebaseLoginFormComponent extends React.Component {
 }
 
 
-export const FirebaseLoginForm = (props) => {
+export const FirebaseRegisterForm = (props) => {
     let appContext = useContext(AppContext);
-    return <FirebaseLoginFormComponent {...props} {...appContext}/>
+    return <FirebaseRegisterFormComponent {...props} {...appContext}/>
 };

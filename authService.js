@@ -1,14 +1,18 @@
 class AuthService {
-    static willRedirect = (currentLocation, destination) => {
-        console.log(`WillRedirect: from ${currentLocation} >> ${destination} :: ${currentLocation !== destination}`)
-        if (currentLocation !== destination) {
-            return {redirect: true, destination: destination}
+    static willRedirect = (currentLocation, destination, exact=false) => {
+        console.log(`WillRedirect: from ${currentLocation} >> ${destination}, exact=${exact}`)
+        if (currentLocation.startsWith(destination)) {
+            if (exact && (currentLocation !== destination)) {
+                return {redirect: true, destination: destination}
+            } else {
+                return {redirect: false, destination: currentLocation}
+            }
         }
         return {redirect: false, destination: null}
     }
 
-    static doRedirect = (currentLocation, destination) => {
-        return this.willRedirect(currentLocation, destination)
+    static doRedirect = (currentLocation, destination, exact) => {
+        return this.willRedirect(currentLocation, destination, exact)
     }
 
     static async watchUser(firebase, onSuccess, onFail) {

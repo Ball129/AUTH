@@ -8,7 +8,7 @@ class AuthService {
                 return {redirect: false, destination: currentLocation}
             }
         }
-        return {redirect: false, destination: null}
+        return {redirect: true, destination: destination}
     }
 
     static doRedirect = (currentLocation, destination, exact) => {

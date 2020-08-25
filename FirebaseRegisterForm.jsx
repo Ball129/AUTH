@@ -2,7 +2,6 @@ import React, {useContext} from "react";
 import {Button, Container, Dimmer, Form, Grid, Header, Segment} from "semantic-ui-react";
 import {AppContext} from "../../constance/appContext";
 import AuthService from "./authService";
-import FirestoreService from "../FIREBASE/firestoreService";
 import {Route, Switch} from "react-router";
  import Path from "../../constance/paths"
 import {Handle404View} from "../../CORE/Handle404View";
@@ -33,44 +32,11 @@ class FirebaseRegisterFormComponent extends React.Component {
         })
     }
 
-    doRegister = async () => {
+    doRegister = () => {
         const {email, password} = this.state
-        // let firestore = this.props.db.firestore()
-        // let collection = firestore.collection("users");
-        // let doc_id = null
-        // await FirestoreService.addDocument(collection, {username: email, roles: []})
-        //     .then(user_id => {doc_id = user_id;})
-        // if (!doc_id) {
-        //     return
-        // }
         this.props.db.auth()
             .createUserWithEmailAndPassword(email, password)
 
-            .catch(async error => {
-                alert(error);
-                // await FirestoreService.deleteDocument(collection, doc_id)
-                this.setState({
-                    message: error.message,
-                    loading: false
-                })
-            })
-    }
-
-    checkUsernameExisted = async () => {
-        const {email} = this.state
-        let firestore = this.props.db.firestore()
-        let collection = firestore.collection("users");
-        let query = collection.where("username", "==", email)
-        await FirestoreService.checkIfExisted([query])
-            .then((existed) => {
-                console.log({existed})
-                if (existed) {
-                    alert("Username Existed")
-                    this.setState({loading: false})
-                } else {
-                    this.doRegister()
-                }
-            })
             .catch(error => {
                 alert(error);
                 this.setState({
@@ -83,7 +49,7 @@ class FirebaseRegisterFormComponent extends React.Component {
     onSubmit = e => {
         this.setState({loading: true})
         e.preventDefault()
-        this.checkUsernameExisted().then(() => {})
+        this.doRegister()
     }
 
     render() {

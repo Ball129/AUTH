@@ -19,7 +19,12 @@ class FirebaseLoginFormComponent extends React.Component {
             currentUser: null,
             message: '',
             loading: false,
+            showPassword: false,
         }
+    }
+
+    togglePassword = e => {
+        this.setState({showPassword: !this.state.showPassword})
     }
 
     onChange = e => {
@@ -75,13 +80,19 @@ class FirebaseLoginFormComponent extends React.Component {
                                             />
                                         </Form.Field>
 
-                                        <Form.Field>
+                                        <Form.Field inline>
+                                            <Button
+                                                floated={'right'}
+                                                icon={'eye'}
+                                                color={'grey'}
+                                                onClick={this.togglePassword}
+                                            />
                                             <Form.Input
                                                 fluid
                                                 icon='lock'
                                                 iconPosition='left'
                                                 placeholder='Password'
-                                                type='password'
+                                                type={this.state.showPassword ? 'text' : 'password'}
                                                 name='password'
                                                 onChange={this.onChange}
                                             />

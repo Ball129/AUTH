@@ -24,10 +24,10 @@ class AuthService {
     static async watchUser(firebase, onSuccess, onFail) {
         firebase.auth().onAuthStateChanged(user => {
             if (user) {
-                console.log("User:", user.email)
+                logger("User:", user.email)
                 onSuccess(user)
             } else {
-                console.log("No user")
+                logger("No user")
                 onFail(user)
             }
         })

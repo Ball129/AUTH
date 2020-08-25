@@ -6,7 +6,6 @@ import FirestoreService from "../FIREBASE/firestoreService";
 import {Route, Switch} from "react-router";
  import Path from "../../constance/paths"
 import {Handle404View} from "../../CORE/Handle404View";
-import PrivateRoute from "../../components/PrivateRoute";
 
 
 class FirebaseRegisterFormComponent extends React.Component {

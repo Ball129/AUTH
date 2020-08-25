@@ -1,6 +1,8 @@
+import logger from "../../CORE/services";
+
 class AuthService {
     static willRedirect = (currentLocation, destination, exact=false) => {
-        console.log(`WillRedirect: from ${currentLocation} >> ${destination}, exact=${exact}`)
+        logger(`WillRedirect: from ${currentLocation} >> ${destination}, exact=${exact}`)
         let result;
         if (currentLocation.startsWith(destination)) {
             if (exact && (currentLocation !== destination)) {
@@ -11,7 +13,7 @@ class AuthService {
         } else {
             result = {redirect: true, destination: destination}
         }
-        console.log(`Result: ${result}`)
+        logger(`Result: ${result}`)
         return result
     }
 

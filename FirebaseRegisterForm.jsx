@@ -6,13 +6,14 @@ import FirestoreService from "../FIREBASE/firestoreService";
 import {Route, Switch} from "react-router";
  import Path from "../../constance/paths"
 import {Handle404View} from "../../CORE/Handle404View";
+import logger from "../../CORE/services";
 
 
 class FirebaseRegisterFormComponent extends React.Component {
 
     constructor(props) {
         super(props)
-        // console.log(this.props.match)
+        logger(this.props.match)
         this.auth_service = new AuthService()
         this.props.setCurrentLocation(this.props.match.path)
         this.state = {

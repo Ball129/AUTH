@@ -3,13 +3,14 @@ import {Button, Container, Dimmer, Form, Grid, Header, Segment} from "semantic-u
 import {AppContext} from "../../constance/appContext";
 import AuthService from "./authService";
  import Path from "../../constance/paths"
+import logger from "../../CORE/services";
 
 
 class FirebaseLoginFormComponent extends React.Component {
 
     constructor(props) {
         super(props)
-        // console.log(this.props.match)
+        logger(this.props.match)
         this.auth_service = new AuthService()
         this.props.setCurrentLocation(this.props.match.path)
         this.state = {

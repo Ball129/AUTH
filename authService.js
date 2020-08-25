@@ -1,7 +1,7 @@
 class AuthService {
     static willRedirect = (currentLocation, destination, exact=false) => {
         console.log(`WillRedirect: from ${currentLocation} >> ${destination}, exact=${exact}`)
-        let result = null;
+        let result;
         if (currentLocation.startsWith(destination)) {
             if (exact && (currentLocation !== destination)) {
                 result = {redirect: true, destination: destination}
@@ -11,7 +11,7 @@ class AuthService {
         } else {
             result = {redirect: true, destination: destination}
         }
-        console.log(result)
+        console.log(`Result: ${result}`)
         return result
     }
 

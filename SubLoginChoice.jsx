@@ -12,6 +12,7 @@ class SubLoginChoice extends Component {
         signInFlow: 'popup',
 
         signInOptions: [
+            this.props.firebase.auth.EmailAuthProvider.PROVIDER_ID,
             this.props.firebase.auth.GoogleAuthProvider.PROVIDER_ID,
             // this.props.firebase.auth.FacebookAuthProvider.PROVIDER_ID,
         ],

@@ -11,7 +11,7 @@ class FirebaseLoginFormComponent extends React.Component {
     constructor(props) {
         super(props)
         logger(this.props.match)
-        this.auth_service = new AuthService()
+        this.authService = new AuthService()
         this.props.setCurrentLocation(this.props.match.path)
         this.state = {
             email: '',
